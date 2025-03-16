@@ -8,12 +8,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens, HasFactory, Notifiable;
-
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+   
     /**
      * The attributes that are mass assignable.
      *
@@ -49,8 +50,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    public static function getAllUsers()
+    public static function getAllUsers($data = ['*'], $offset = 0, $limit = 10, $orderBy = "Desc")
     {
-        return self::all();
+        return self::select($data)->limit($limit)->offset($offset)->orderBy('id', $orderBy)->get();
     }
 }
