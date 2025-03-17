@@ -85,7 +85,9 @@ class BlogController extends Controller
     // Blog güncelleme
     public function update(Request $request, $id)
     {
+
         try {
+
             $request->validate([
                 'title' => 'required|string|max:255',
                 'content' => 'required',
@@ -93,7 +95,10 @@ class BlogController extends Controller
                 'published_at' => 'nullable|date',
             ]);
 
-            $blog = Blog::findOrFail($id);
+            $blog = Blog::find($id);
+            if (!$blog) {
+                return response_json(false, __("validation.some_error"), ["message" => "Blog Bulunamadı"]);
+            }
             $blog->title = $request->title;
             $blog->content = $request->content;
             $blog->published_at = $request->published_at;
@@ -108,9 +113,6 @@ class BlogController extends Controller
             }
 
             $blog->save();
-
-            return response()->json(['message' => 'Blog başarıyla güncellendi', 'blog' => $blog]);
-
             return response_json(true, __("validation.success_process"), ['blog' => $blog]);
         } catch (\Illuminate\Validation\ValidationException $t) {
             return response_json(false, __("validation.some_error"), $t->errors());
@@ -120,12 +122,18 @@ class BlogController extends Controller
     // Blog silme
     public function destroy($id)
     {
-        $blog = Blog::findOrFail($id);
-        if ($blog->cover_image) {
-            Storage::disk('public')->delete($blog->cover_image);
+        try {
+            $blog = Blog::find($id);
+            if (!$blog) {
+                return response_json(false, __("validation.some_error"), ["message" => "Blog Bulunamadı"]);
+            }
+            if ($blog->cover_image) {
+                Storage::disk('public')->delete($blog->cover_image);
+            }
+            $blog->delete();
+            return response_json(true, __("validation.success_process"), ['blog' => $blog]);
+        } catch (\Illuminate\Validation\ValidationException $t) {
+            return response_json(false, __("validation.some_error"), $t->errors());
         }
-        $blog->delete();
-
-        return response()->json(['message' => 'Blog başarıyla silindi']);
     }
 }
