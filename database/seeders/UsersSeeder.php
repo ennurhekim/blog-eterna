@@ -16,20 +16,33 @@ class UsersSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        // Admin
+        // Admin Kullanıcı
         $user = User::updateOrCreate(
             [
-                'email' => "ennur2828@gmail.com",
+                'email' => 'ennur2828@gmail.com',
             ],
             [
-                'name' => "Ernur",
-                'surname' => "Hekim",
-                'phone' => "+905350435140",
+                'name' => 'Ernur',
+                'surname' => 'Hekim',
+                'phone' => '+905350435140',
                 'password' => bcrypt('12345678'),
             ]
         );
-        $user->assignRole(['admin']);
-        // Users
+        $user->assignRole('admin');
+        // Admin Kullanıcı
+        $user = User::updateOrCreate(
+            [
+                'email' => 'writer@test.com',
+            ],
+            [
+                'name' => 'test',
+                'surname' => 'test',
+                'phone' => '+905350435141',
+                'password' => bcrypt('12345678'),
+            ]
+        );
+        $user->assignRole('writer');
+        // Rastgele 10 kullanıcı oluştur
         for ($i = 0; $i < 10; $i++) {
             $user = User::create([
                 'email' => $faker->unique()->safeEmail(),
@@ -38,7 +51,7 @@ class UsersSeeder extends Seeder
                 'phone' => $faker->unique()->phoneNumber(),
                 'password' => bcrypt('12345678'),
             ]);
-            $user->assignRole(['user']);
+            $user->assignRole('user');
         }
     }
 }

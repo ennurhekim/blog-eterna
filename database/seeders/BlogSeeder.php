@@ -12,13 +12,15 @@ class BlogSeeder extends Seeder
 {
     public function run()
     {
-        $user = User::first(); // İlk kullanıcıyı al (Yoksa user seeder çalıştır)
+        // İlk kullanıcıyı al (Eğer yoksa UserSeeder çalıştır)
+        $user = User::first();
 
         if (!$user) {
             $this->command->info('Önce bir kullanıcı oluşturmalısınız.');
             return;
         }
 
+        // Blog verileri
         $blogs = [
             [
                 'title' => 'Laravel ile Blog Yönetimi',
@@ -40,6 +42,7 @@ class BlogSeeder extends Seeder
             ],
         ];
 
+        // Blogları oluştur
         foreach ($blogs as $blog) {
             Blog::create([
                 'title' => $blog['title'],
@@ -47,10 +50,10 @@ class BlogSeeder extends Seeder
                 'content' => $blog['content'],
                 'cover_image' => $blog['cover_image'],
                 'published_at' => $blog['published_at'],
-                'user_id' => $user->id,
+                'user_id' => $user->id, // İlk kullanıcıyı blog yazarı olarak kullanıyoruz
             ]);
         }
 
-        //  $this->command->info('Bloglar başarıyla eklendi.');
+       // $this->command->info('Bloglar başarıyla oluşturuldu!');
     }
 }

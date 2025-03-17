@@ -169,6 +169,7 @@ return [
     "success_register"=>"Registered success",
     "sucess_login"=>"Login success",
     "success_store_blog" => "Post created successfully",
+    "error_auth" => "You are not authorized for this transaction."
 
     /*
     |--------------------------------------------------------------------------

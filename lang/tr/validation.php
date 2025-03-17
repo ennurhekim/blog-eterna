@@ -69,5 +69,6 @@ return [
     "some_error" => "Bir hata ile karşılaşıldı",
     "success_register" => "Üyelik Başarılı",
     "success_login" => "Giriş başarılı",
-    "success_store_blog" => "Gönderi başarıyla oluşturuldu"
+    "success_store_blog" => "Gönderi başarıyla oluşturuldu",
+    "error_auth" => "Bu işlem için yetkiniz bulunmamaktadır"
 ];

@@ -18,7 +18,8 @@ return new class extends Migration
             $table->text('content'); // İçerik
             $table->string('cover_image')->nullable(); // Kapak Görseli
             $table->dateTime('published_at')->nullable(); // Yayın Tarihi
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Yazar
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Yazarm
+            $table->enum('status', ['draft', 'published'])->default('draft');
             $table->timestamps();
         });
     }

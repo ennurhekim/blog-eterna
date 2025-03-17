@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Blog;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class BlogController extends Controller
 {
@@ -30,13 +32,19 @@ class BlogController extends Controller
     public function store(Request $request)
     {
         try {
+
+            if (!auth()->user()->hasAnyRole(['writer', 'admin'])) {
+                return response_json(false, __("validation.error_auth"), "");
+            }
+
             $request->validate([
                 'title' => 'required|string|max:255',
                 'content' => 'required',
                 'cover_image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
                 'published_at' => 'nullable|date',
                 'category_ids' => 'nullable|array',
-                'category_ids.*' => 'exists:categories,id'
+                'category_ids.*' => 'exists:categories,id',
+                'status' => 'required|in:draft,published',
             ]);
 
             $blog = new Blog();
@@ -44,19 +52,21 @@ class BlogController extends Controller
             $blog->content = $request->content;
             $blog->published_at = $request->published_at;
             $blog->user_id = auth()->id();
+            $blog->status = $request->status ?? 'draft'; // Varsayılan olarak taslak
+            $blog->save(); // Önce kaydediyoruz ki medya ekleyebilelim.
 
             if ($request->hasFile('cover_image')) {
-                $path = $request->file('cover_image')->store('blog_images', 'public');
-                $blog->cover_image = $path;
+                $blog->addMedia($request->file('cover_image'))->toMediaCollection('cover_images');
             }
-
-            $blog->save();
-
+            // Kategori ekleme
             if ($request->has('category_ids')) {
                 $blog->categories()->attach($request->category_ids);
             }
 
-            return response_json(true, __("validation.success_process"), ['blog' => $blog]);
+            return response_json(true, __("validation.success_process"), [
+                'blog' => $blog,
+                'cover_image' => $blog->getFirstMediaUrl('cover_images'), // Medya dosyasının URL'sini döndürelim.
+            ]);
         } catch (\Illuminate\Validation\ValidationException $t) {
             return response_json(false, __("validation.some_error"), $t->errors());
         }
@@ -85,34 +95,62 @@ class BlogController extends Controller
     // Blog güncelleme
     public function update(Request $request, $id)
     {
-
         try {
+            // Kullanıcı admin veya writer mı?
+            if (!auth()->user()->hasAnyRole(['writer', 'admin'])) {
+                return response_json(false, __("validation.error_auth"), "");
+            }
 
+            // Blogu bul
+            $blog = Blog::find($id);
+            if (!$blog) {
+                return response_json(false, __("validation.some_error"), ["message" => "Blog Bulunamadı"]);
+            }
+
+            // Admin değilse, sadece kendi yazısını güncelleyebilir
+            if (!auth()->user()->hasRole('admin') && $blog->user_id !== auth()->id()) {
+                return response_json(false, __("validation.error_auth"), ["message" => "Sadece kendi yazınızı güncelleyebilirsiniz."]);
+            }
+
+            // Validasyon
             $request->validate([
                 'title' => 'required|string|max:255',
                 'content' => 'required',
                 'cover_image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
                 'published_at' => 'nullable|date',
+                'category_ids' => 'nullable|array',
+                'category_ids.*' => 'exists:categories,id',
             ]);
 
-            $blog = Blog::find($id);
-            if (!$blog) {
-                return response_json(false, __("validation.some_error"), ["message" => "Blog Bulunamadı"]);
-            }
+            // Blog verilerini güncelle
             $blog->title = $request->title;
             $blog->content = $request->content;
             $blog->published_at = $request->published_at;
+            if ($request->status) {
+                $blog->status = $request->status;
+            }
 
             // Yeni kapak görseli yükleme
             if ($request->hasFile('cover_image')) {
-                if ($blog->cover_image) {
-                    Storage::disk('public')->delete($blog->cover_image);
+                // Eğer blog daha önce bir kapak görseline sahipse, eskiyi silelim
+                if ($blog->hasMedia('cover_image')) {
+                    // Medya koleksiyonundaki tüm görselleri sil
+                    $blog->getMedia('cover_image')->each(function ($media) {
+                        $media->delete(); // Her medya öğesini sil
+                    });
                 }
-                $path = $request->file('cover_image')->store('blog_images', 'public');
-                $blog->cover_image = $path;
+                // Yeni kapak görselini yükle
+                $blog->addMedia($request->file('cover_image'))
+                    ->toMediaCollection('cover_image');
+            }
+            // Kategori ekleme
+            if ($request->has('category_ids')) {
+                $blog->categories()->sync($request->category_ids); // Sync işlemi ile önceki kategoriler silinir ve yenileri eklenir
             }
 
+            // Blogu kaydet
             $blog->save();
+
             return response_json(true, __("validation.success_process"), ['blog' => $blog]);
         } catch (\Illuminate\Validation\ValidationException $t) {
             return response_json(false, __("validation.some_error"), $t->errors());

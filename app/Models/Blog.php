@@ -5,17 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Blog extends Model
+class Blog extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     protected $fillable = ['title', 'slug', 'content', 'cover_image', 'published_at', 'user_id'];
 
     protected static function boot()
     {
         parent::boot();
-
         static::creating(function ($blog) {
             $originalSlug = Str::slug($blog->title); // Başlığı slug'a çevir
             $slug = $originalSlug;
