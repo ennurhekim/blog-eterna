@@ -16,6 +16,7 @@ class BlogController extends Controller
     // Blog listesi
     public function index(Request $request)
     {
+       
         $query = Blog::query();
 
         // Arama parametresi varsa başlık veya içeriğe göre filtrele

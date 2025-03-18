@@ -39,4 +39,8 @@ class Blog extends Model implements HasMedia
     {
         return $this->belongsToMany(Category::class, 'blog_category');
     }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

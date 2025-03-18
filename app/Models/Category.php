@@ -29,14 +29,16 @@ class Category extends Model
         });
     }
 
+    // Alt kategorileri getiren ilişki (recursive)
+    public function children()
+    {
+        return $this->hasMany(Category::class, 'parent_id')->with('children'); // Burada recursive çağrı yapılıyor
+    }
+
+    // Üst kategoriyi getiren ilişki
     public function parent()
     {
         return $this->belongsTo(Category::class, 'parent_id');
-    }
-
-    public function children()
-    {
-        return $this->hasMany(Category::class, 'parent_id');
     }
 
     public function blogs()
