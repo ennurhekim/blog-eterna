@@ -28,6 +28,21 @@ class Blog extends Model implements HasMedia
             }
             $blog->slug = $slug;
         });
+
+        static::updating(function ($blog) {
+            if ($blog->isDirty('title')) { 
+                $originalSlug = Str::slug($blog->title);
+                $slug = $originalSlug;
+                $count = 1;
+
+                while (Blog::where('slug', $slug)->where('id', '!=', $blog->id)->exists()) {
+                    $slug = $originalSlug . '-' . $count;
+                    $count++;
+                }
+
+                $blog->slug = $slug;
+            }
+        });
     }
 
     public function user()

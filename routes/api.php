@@ -27,14 +27,19 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/blogs', [BlogController::class, 'store']);
     Route::get('/blogs/{idOrSlug}', [BlogController::class, 'show']);
     Route::post('/blogs/{id}', [BlogController::class, 'update']);
-    Route::post('/blogs/delete/{id}', [BlogController::class, 'destroy']);
+    Route::delete('/blogs/delete/{id}', [BlogController::class, 'destroy']);
 
     Route::post('/blogs/{idOrSlug}/comments', [CommentController::class, 'store']);
     Route::post('/blogs/comments/{commentId}', [CommentController::class, 'destroy']);
+
+    //Yorum route ları
+    Route::post('comment/{commentId}/approve', [CommentController::class, 'approve']);
+    Route::post('comment/{commentId}/reject', [CommentController::class, 'reject']);
+    Route::post('comment/{commentId}/pending', [CommentController::class, 'pending']);
+    Route::get('comments/filter/{status}', [CommentController::class, 'filterComments']);
 });
 
+//İlerde proje token koyularak sadece projelerin cekmesi için middleware koyulabilir
 Route::get('/categories', [CategoryController::class, 'index']);
-// Blog İşlemleri
 Route::get('/blogs', [BlogController::class, 'index']);
-// Yorum İşlemleri
 Route::get('/blogs/{blogId}/comments', [CommentController::class, 'index']);

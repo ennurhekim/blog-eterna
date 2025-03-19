@@ -14,14 +14,14 @@ class CategoryController extends Controller
         try {
             $categories = Category::with('children')->whereNull('parent_id')->get();
             return response_json(true, __("validation.success_process"), ['categories' => $categories]);
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response_json(false, __("validation.some_error"), ['error' => $e->getMessage()]);
         }
     }
     public function store(Request $request)
     {
         try {
-            if (!auth()->user()->hasAnyRole(['admin'])) {
+            if (!auth()->user()->can('create category')) {
                 return response_json(false, __("validation.error_auth"), "");
             }
             $request->validate([
@@ -34,17 +34,16 @@ class CategoryController extends Controller
                 'parent_id' => $request->parent_id,
             ]);
             return response_json(true, __("validation.success_process"), ['category' => $category]);
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             return response_json(false, __("validation.some_error"), ['error' => $e->getMessage()]);
         }
     }
     public function destroy($id)
     {
         try {
-            if (!auth()->user()->hasAnyRole(['admin'])) {
+            if (!auth()->user()->can('delete category')) {
                 return response_json(false, __("validation.error_auth"), "");
             }
-
             $category = Category::findOrFail($id);
 
             // Alt kategorileri de soft delete yap
@@ -61,15 +60,13 @@ class CategoryController extends Controller
      */
     private function deleteCategoryWithChildren($category)
     {
-        // Alt kategorileri al
+        if (!auth()->user()->can('delete category')) {
+            return response_json(false, __("validation.error_auth"), "");
+        }
         $subCategories = $category->children;
-
-        // Eğer alt kategori varsa, her birini sil
         foreach ($subCategories as $subCategory) {
             $this->deleteCategoryWithChildren($subCategory);
         }
-
-        // Kategoriyi soft delete yap
         $category->delete();
     }
 }

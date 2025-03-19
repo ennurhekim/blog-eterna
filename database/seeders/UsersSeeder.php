@@ -43,6 +43,19 @@ class UsersSeeder extends Seeder
         );
         $user->assignRole('writer');
         // Rastgele 10 kullanıcı oluştur
+        $user = User::updateOrCreate(
+            [
+                'email' => 'user@test.com',
+            ],
+            [
+                'name' => 'user',
+                'surname' => 'user',
+                'phone' => '+905350435142',
+                'password' => bcrypt('12345678'),
+            ]
+        );
+        $user->assignRole('user');
+        // Rastgele 10 kullanıcı oluştur
         for ($i = 0; $i < 10; $i++) {
             $user = User::create([
                 'email' => $faker->unique()->safeEmail(),
