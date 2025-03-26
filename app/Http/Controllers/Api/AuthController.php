@@ -12,6 +12,7 @@ class AuthController extends Controller
     //
     public function register(Request $request)
     {
+     
         try {
             $request->validate([
                 'name' => 'required|string|max:255',
@@ -28,7 +29,7 @@ class AuthController extends Controller
                 'password' => Hash::make($request->password),
             ]);
 
-            $user->assignRole(['reader']);
+            $user->assignRole('user');
             
             $token = $user->createToken('auth_token')->plainTextToken;
             return response_json(true, __("validation.success_register"), ['token' => $token]);
@@ -48,10 +49,11 @@ class AuthController extends Controller
             })->first();
 
             if (! $user || ! Hash::check($request->password, $user->password)) {
-                return response_json(true, "Hata");
+                return response_json(false, "Kullanıcı bulunamadı");
             }
             // Kullanıcı için yeni bir token oluştur
             $token = $user->createToken('auth_token')->plainTextToken;
+           
             return response_json(true, __("validation.success_login"), ['token' => $token]);
         } catch (\Illuminate\Validation\ValidationException $t) {
 

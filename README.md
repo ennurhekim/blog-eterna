@@ -1,4 +1,5 @@
-# Laravel Proje Kurulumu
+
+# Laravel Blog Projesi Kurulumu
 
 ## Ortam Dosyası Ayarları
 
@@ -27,7 +28,7 @@ php artisan db:seed --class=BlogSeeder
 
 ## Public Klasörüne Storage Bağlantısı
 
-Resim ve dosya erişimi için `public` klasörüne bağlantı oluşturun:
+Resim dosyalarını public klasörüne bağlamak için aşağıdaki komutu çalıştırın:
 
 ```sh
 php artisan storage:link
@@ -35,23 +36,58 @@ php artisan storage:link
 
 ---
 
+## Queue İşlemleri
+
+Queue işlemlerini çalıştırmak için aşağıdaki komutu kullanın:
+
+```sh
+php artisan queue:work
+```
+
+---
+
+## Schedule İşlemleri
+
+Belirli işlemleri belirli zamanlarda çalıştırmak için aşağıdaki komutu kullanın (örneğin, yorum yapılmamış blog yazılarını silme işlemi gibi):
+
+```sh
+php artisan schedule:work
+```
+
+---
+
+## Yorum Onayı
+
+Yorumlar, yönetici tarafından onaylanabilir, onaylanmayabilir veya beklemeye alınabilir.
+
+---
+
+## Log Kayıtları
+
+Log kayıtlarını görmek için aşağıdaki URL'yi ziyaret edebilirsiniz:
+
+```
+http://localhost:8000/log-viewer
+```
+
+---
+
 ## Test Kullanıcı Bilgileri
 
-### **Admin**
+**Admin:**
 
-- **E-posta:** [ennur2828@gmail.com](mailto\:ennur2828@gmail.com)
-- **Telefon:** +90 535 043 5140
-- **Şifre:** 12345678
+- Email: ennur2828@gmail.com
+- Phone: +905350435140
+- Password: 12345678
 
-### **Yazar (Writer)**
+**Writer:**
 
-- **E-posta:** [writer@test.com](mailto\:writer@test.com)
-- **Telefon:** +90 535 043 5141
-- **Şifre:** 12345678
+- Email: writer@test.com
+- Phone: +905350435141
+- Password: 12345678
 
-### **Kullanıcı (User)**
+**User:**
 
-- **E-posta:** [user@test.com](mailto\:user@test.com)
-- **Telefon:** +90 535 043 5142
-- **Şifre:** 12345678
-
+- Email: user@test.com
+- Phone: +905350435142
+- Password: 12345678

@@ -3,26 +3,48 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Mail\CommentMail;
 use App\Models\Comment;
 use App\Models\Blog;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class CommentController extends Controller
 {
     // Belirli bir blogun yorumlarını getir
     public function index($idOrSlug)
     {
+
+        if (!auth()->check() || !auth()->user()->can('update comment')) {
+            $blog = Blog::where('id', $idOrSlug)->orWhere('slug', $idOrSlug)->firstOrFail();
+            $comments = Comment::with('user', 'blog')->where(['blog_id' => $blog->id, 'status' => "approved"])->get();
+            return response_json(true, __("validation.success_process"), ['comments' => $comments]);
+        }
         $blog = Blog::where('id', $idOrSlug)->orWhere('slug', $idOrSlug)->firstOrFail();
         $comments = Comment::with('user', 'blog')->where('blog_id', $blog->id)->latest()->get();
-        return response()->json($comments);
+        return response_json(true, __("validation.success_process"), ['comments' => $comments]);
+    }
+    public function all()
+    {
+        if (!auth()->check() || !auth()->user()->can('update comment')) {
+            $comments = Comment::with('user', 'blog')->get();
+        } else {
+            // Admin yetkisi varsa tüm yorumları getir
+            $comments = Comment::with('user', 'blog')->get();
+        }
+
+        return response_json(true, __("validation.success_process"), ['comments' => $comments]);
     }
 
     public function store(Request $request, $idOrSlug)
     {
+
         try {
-            if (!auth()->user()->can('create comment')) {
+
+            if (!auth()->check() && auth()->user()->can('create comment')) {
                 return response_json(false, __("validation.error_auth"), "");
             }
             $request->validate([
@@ -34,8 +56,12 @@ class CommentController extends Controller
                 'user_id' => auth()->id(),
                 'blog_id' => $blog->id,
                 'content' => $request->content,
-            ]);
-
+            ]); // Manuel olarak 'name' ekleyin
+            $comment = Comment::with("user")->find($comment->id);
+            $commentData = ["name" => auth()->user()->name ?? "", "email" => auth()->user()->email ?? "", "message" => $request->content ?? ""];
+            if ($comment) {
+                Mail::to('ennur2828@gmail.com')->queue(new CommentMail($commentData));
+            }
             return response_json(true, __("validation.success_process"), ['comment' => $comment]);
         } catch (\Illuminate\Validation\ValidationException $t) {
             return response_json(false, __("validation.some_error"), $t->errors());

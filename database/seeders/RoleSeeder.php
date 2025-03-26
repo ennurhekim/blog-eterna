@@ -29,6 +29,7 @@ class RoleSeeder extends Seeder
             'edit category',
             'delete category',
             'approve comment',
+            'create comment',
             'pending comment',
             'reject comment',
             'delete comment'

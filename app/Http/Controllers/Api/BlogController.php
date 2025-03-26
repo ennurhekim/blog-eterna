@@ -13,35 +13,92 @@ use Spatie\Permission\Models\Role;
 class BlogController extends Controller
 {
 
-    // Blog listesi
     public function index(Request $request)
     {
+        $query = Blog::with(["categories", 'user']); // Category ile birlikte çekiyoruz.
 
-        $query = Blog::query();
-
-        // Arama parametresi varsa başlık veya içeriğe göre filtrele
-        if ($request->has('search')) {
-            $search = $request->search;
-            $query->where('title', 'LIKE', "%{$search}%")
-                ->orWhere('content', 'LIKE', "%{$search}%");
+        // Admin değilse sadece 'published' olanları göster
+        if (!auth()->check() || !auth()->user()->hasRole('admin')) {
+            $query->where("status", 'published');
         }
 
+        // Arama parametresi varsa başlık veya içerikte ara
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where("status", 'published')
+                    ->where(function ($subQuery) use ($search) {
+                        $subQuery->where('title', 'LIKE', "%{$search}%")
+                            ->orWhere('content', 'LIKE', "%{$search}%");
+                    });
+            });
+        }
+
+        // Sayfalama işlemi
         $blogs = $query->latest()->paginate($request->per_page ?? 10);
+
         return response()->json($blogs);
     }
-
+    public function area1(Request $request)
+    {
+        $query = Blog::with(["categories", 'user']); // Kategoriler ve kullanıcı ile birlikte çekiyoruz.
+        $blogs = $query->latest()->take(1)->get();
+        $blogs->map(function ($blog) {
+            $blog->image_url = $blog->getFirstMediaUrl('cover_images') ?? null;
+            return $blog;
+        });
+        return response()->json($blogs);
+    }
+    public function area2(Request $request)
+    {
+        $query = Blog::with(["categories", 'user']);
+        $blogs = $query->latest()->skip(1)->take(3)->get();
+        $blogs->map(function ($blog) {
+            $blog->image_url = $blog->getFirstMediaUrl('cover_images') ?? null;
+            return $blog;
+        });
+        return response()->json($blogs);
+    }
+    public function area3(Request $request)
+    {
+        $query = Blog::with(["categories", 'user']); // Kategoriler ve kullanıcı ile birlikte çekiyoruz.
+        $blogs = $query->latest()->skip(4)->take(2)->get();
+        $blogs->map(function ($blog) {
+            $blog->image_url = $blog->getFirstMediaUrl('cover_images') ?? null;
+            return $blog;
+        });
+        return response()->json($blogs);
+    }
+    public function area4(Request $request)
+    {
+        $query = Blog::with(["categories", 'user']); // Kategoriler ve kullanıcı ile birlikte çekiyoruz.
+        $blogs = $query->latest()->skip(6)->take(2)->get();
+        $blogs->map(function ($blog) {
+            $blog->image_url = $blog->getFirstMediaUrl('cover_images') ?? null;
+            return $blog;
+        });
+        return response()->json($blogs);
+    }
+    public function area5(Request $request)
+    {
+        $query = Blog::with(["categories", 'user']); // Kategoriler ve kullanıcı ile birlikte çekiyoruz.
+        $blogs = $query->latest()->skip(1)->take(5)->get();
+        $blogs->map(function ($blog) {
+            $blog->image_url = $blog->getFirstMediaUrl('cover_images') ?? null;
+            return $blog;
+        });
+        return response()->json($blogs);
+    }
     public function store(Request $request)
     {
         try {
-
             if (!auth()->user()->can('create post')) {
                 return response_json(false, __("validation.error_auth"), "");
             }
-
             $request->validate([
                 'title' => 'required|string|max:255',
                 'content' => 'required',
-                'cover_image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+                'cover_images' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
                 'published_at' => 'nullable|date',
                 'category_ids' => 'nullable|array',
                 'category_ids.*' => 'exists:categories,id',
@@ -66,14 +123,12 @@ class BlogController extends Controller
 
             return response_json(true, __("validation.success_process"), [
                 'blog' => $blog,
-                'cover_image' => $blog->getFirstMediaUrl('cover_images'), // Medya dosyasının URL'sini döndürelim.
+                'cover_images' => $blog->getFirstMediaUrl('cover_images'), // Medya dosyasının URL'sini döndürelim.
             ]);
         } catch (\Illuminate\Validation\ValidationException $t) {
             return response_json(false, __("validation.some_error"), $t->errors());
         }
     }
-
-    // Belirli bir blog yazısını göster
     public function show($idOrSlug)
     {
         try {
@@ -87,11 +142,16 @@ class BlogController extends Controller
             if (!$blog) {
                 return response_json(false, __("validation.some_error"), ['message' => 'Blog bulunamadı'], 404);
             }
-            return response_json(true, __("validation.success_process"), ['blog' => $blog]);
+            $blogImage = $blog->getFirstMediaUrl('cover_images') ?? null;
+            return response_json(true, __("validation.success_process"), [
+                "data" => $blog,
+                'image' => $blogImage,
+            ]);
         } catch (\Illuminate\Validation\ValidationException $t) {
             return response_json(false, __("validation.some_error"), $t->errors());
         }
     }
+
     public function update(Request $request, $idOrSlug)
     {
         try {
@@ -111,7 +171,7 @@ class BlogController extends Controller
             $request->validate([
                 'title' => 'required|string|max:255',
                 'content' => 'required',
-                'cover_image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+                'cover_images' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
                 'published_at' => 'nullable|date',
                 'category_ids' => 'nullable|array',
                 'category_ids.*' => 'exists:categories,id',
@@ -122,14 +182,14 @@ class BlogController extends Controller
             if ($request->status) {
                 $blog->status = $request->status;
             }
-            if ($request->hasFile('cover_image')) {
-                if ($blog->hasMedia('cover_image')) {
-                    $blog->getMedia('cover_image')->each(function ($media) {
+            if ($request->hasFile('cover_images')) {
+                if ($blog->hasMedia('cover_images')) {
+                    $blog->getMedia('cover_images')->each(function ($media) {
                         $media->delete();
                     });
                 }
                 $blog->addMedia($request->file('cover_image'))
-                    ->toMediaCollection('cover_image');
+                    ->toMediaCollection('cover_images');
             }
             if ($request->has('category_ids')) {
                 $blog->categories()->sync($request->category_ids);
@@ -143,7 +203,7 @@ class BlogController extends Controller
     }
     public function destroy($idOrSlug)
     {
-       
+
         try {
             $user = auth()->user();
             $blog = Blog::where('id', $idOrSlug)
@@ -158,7 +218,7 @@ class BlogController extends Controller
                 return response_json(false, __("validation.error_auth"), "");
             }
             // Spatie Media Library kullanarak resmi sil
-            $blog->clearMediaCollection('cover_image');
+            $blog->clearMediaCollection('cover_images');
 
             $blog->delete();
             return response_json(true, __("validation.success_process"), ['blog' => $blog]);
