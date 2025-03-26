@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BlogController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CommentController;
+use App\Http\Controllers\Api\LogController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\UserController;
 
@@ -37,6 +38,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('comment/{commentId}/reject', [CommentController::class, 'reject']);
     Route::post('comment/{commentId}/pending', [CommentController::class, 'pending']);
     Route::get('comments/filter/{status}', [CommentController::class, 'filterComments']);
+
+    
+    Route::get('/log', [LogController::class, 'show']);
 });
 
 //İlerde proje token koyularak sadece projelerin cekmesi için middleware koyulabilir
