@@ -1,0 +1,1597 @@
+{
+	"info": {
+		"_postman_id": "ee33f1b2-645d-4b52-976b-2c6f0c2fd2b4",
+		"name": "BLOG_ETERNA",
+		"description": "# 🚀 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these [request](https://learning.postman.com/docs/sending-requests/requests/) types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n ```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a [variable](https://learning.postman.com/docs/sending-requests/variables/) called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Scripts\" tab**\n\nAdding tests to your requests can help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/fa30ea0a-373d-4545-a668-e7b283cca343/aW1hZ2UucG5n\" alt=\"\" height=\"1530\" width=\"2162\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n    \n- Add more [scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/) to verify if the API works as expected and execute workflows.\n    \n\n## 💡Related templates\n\n[API testing basics](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9a37a28-055b-49cd-8c7e-97494a21eb54&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[API documentation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9c28f47-1253-44af-a2f3-20dce4da1f18&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[Authorization methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6964382",
+		"_collection_link": "https://universal-astronaut-969173.postman.co/workspace/Sipay~34070ac7-700c-4e0b-a1d4-a82c8e542e4f/collection/6964382-ee33f1b2-645d-4b52-976b-2c6f0c2fd2b4?action=share&source=collection_link&creator=6964382"
+	},
+	"item": [
+		{
+			"name": "Blog",
+			"item": [
+				{
+					"name": "blog new",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "3|OkbGoZvxSXmBK724pp7HAidymqu3STIRUQeKqZJJ2a28334e",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Next.js vs Laravel",
+									"description": "Başlık",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "Bilinenin aksine, Lipsum sadece rastgele dizilmiş harflerden oluşan paragraflardan ibaret değildir, tarihi MÖ 45 yıllarına dayanan bir klasik Latin edebiyatı eserine dayanır. Yaklaşık 2000 yıldan fazla bir geçmişi vardır. Virginia, ABD'deki Hampden-Sydney Üniversitesinden (Hampden–Sydney College) Latin dili profesörü Richard McClintock, Lorem Ipsum paragraflarından birinde anlaşılması en güç Latince kelimelerden bir \"consectetur\" sözcüğüne rastlamış, klasik Latin edebiyatı eserlerinde de gördüğü bu kelimeden hareketle Lipsum'un aslında işe yarar bir kaynak olduğunu fark etmiştir.\n\nLorem Ipsum, Cicero'nun MÖ 45 yılında yazdığı \"de Finibus Bonorum et Malorum – İyi ve Kötünün Uç Sınırları\" eserindeki 1.30.32 sayılı paragrafında yer alır. Bu eser Rönesans döneminde etik teorileri üzerine bilimsel inceleme konusu haline gelmiştir.",
+									"description": "İçerik",
+									"type": "text"
+								},
+								{
+									"key": "cover_image",
+									"description": "Önce çıkan görsel",
+									"type": "file",
+									"src": "/C:/Users/beowu/Pictures/Screenshots/Ekran görüntüsü 2024-10-04 215745.png"
+								},
+								{
+									"key": "category_ids[0]",
+									"value": "1",
+									"description": "üst kategkri",
+									"type": "text"
+								},
+								{
+									"key": "category_ids[1]",
+									"value": "2",
+									"description": "alt kategori",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "published",
+									"description": "yayında yayında degıl",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}api/blogs",
+							"host": [
+								"{{base_url}}api"
+							],
+							"path": [
+								"blogs"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "blog update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|1nMqScsmUHp74WByXBLuMI0uku5oKW25AJfn62HEde260516",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "PHP 8.0, PHP dili için",
+									"type": "text"
+								},
+								{
+									"key": "content",
+									"value": "PHP 8.0, PHP dili için önemli bir güncellemedir.\nOptimizasyonlar ve yeni özellikler: Adlandırılmış Değişkenler, Union Types, Attributes, Kurucularda Özellik Tanımı, Match İfadesi, Nullsafe Operatorü, JIT(Anında Derleme) yanında tip sistemi, hata işleme ve tutarlılıkta iyileştirmeler içerir.",
+									"type": "text"
+								},
+								{
+									"key": "cover_image",
+									"type": "file",
+									"src": "/C:/Users/beowu/Pictures/Screenshots/Ekran görüntüsü 2024-10-12 034859.png"
+								},
+								{
+									"key": "published_at",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "category_ids[0]",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "category_ids[1]",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "published",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}api/blogs/php-8-yenilikleri",
+							"host": [
+								"{{base_url}}api"
+							],
+							"path": [
+								"blogs",
+								"php-8-yenilikleri"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "blog  list",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer 1|wExlrZ1K5Lyz1dHkwvSvi3p4H7bC5mpsnRjHHcqt0807d126",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}api/blogs/get/area2",
+							"host": [
+								"{{base_url}}api"
+							],
+							"path": [
+								"blogs",
+								"get",
+								"area2"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "Ernur",
+									"description": "arama verilerini göndermek için",
+									"disabled": true
+								}
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "blog  get",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|1nMqScsmUHp74WByXBLuMI0uku5oKW25AJfn62HEde260516",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer 1|wExlrZ1K5Lyz1dHkwvSvi3p4H7bC5mpsnRjHHcqt0807d126",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}api/blogs/guzel-gunler-gelecek",
+							"host": [
+								"{{base_url}}api"
+							],
+							"path": [
+								"blogs",
+								"guzel-gunler-gelecek"
+							],
+							"query": [
+								{
+									"key": null,
+									"value": "canakkale-gezisi",
+									"disabled": true
+								}
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "blog delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|1nMqScsmUHp74WByXBLuMI0uku5oKW25AJfn62HEde260516",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}api/blogs/delete/araba-1",
+							"host": [
+								"{{base_url}}api"
+							],
+							"path": [
+								"blogs",
+								"delete",
+								"araba-1"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "ernur2828@gmail.com",
+									"description": "required|string|email|max:255|unique",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "ernur",
+									"description": "required|string|max:255",
+									"type": "text"
+								},
+								{
+									"key": "surname",
+									"value": "hekim",
+									"description": "required|string|max:255",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "555",
+									"description": "nullable|unique",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"description": "required|string|min:8",
+									"type": "text"
+								},
+								{
+									"key": "password_confirmation",
+									"value": "12345678",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}api/register",
+							"host": [
+								"{{base_url}}api"
+							],
+							"path": [
+								"register"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "ennur2828@gmail.com",
+									"description": "admin",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "555033",
+									"description": "admin",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"description": "admin",
+									"type": "text"
+								},
+								{
+									"key": "empty",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "writer@test.com",
+									"description": "yazar",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "phone",
+									"value": "555033",
+									"description": "yazar",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"description": "yazar",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "empty",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "user@test.com",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "phone",
+									"value": "555022",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "admin_token",
+									"value": "1|1nMqScsmUHp74WByXBLuMI0uku5oKW25AJfn62HEde260516",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "yazar_token",
+									"value": "5|izi7VyJUgCRN4eGv3GSvawiu72Hzs7zwrQUJ5Tmz184ff5fe",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "user_token",
+									"value": "6|Q7hO2BmBmZoudkK5Mqozz0gKwxwMsSXhmgm2HuJ488e4013e",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}api/login",
+							"host": [
+								"{{base_url}}api"
+							],
+							"path": [
+								"login"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "category new",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "117|oBR2OIRVArvV0ZceYkd5nRzzVAAsJIf2geROgDAef9a355dc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Kadın",
+									"description": "Kategori adı",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}api/categories",
+							"host": [
+								"{{base_url}}api"
+							],
+							"path": [
+								"categories"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "category new sub",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|ScYLYXg7JkKVJgf8gqU6wCZwSsoN2dOzsQ7B4JZZ3890feb2",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Ayakkabı",
+									"description": "Kategori adı",
+									"type": "text"
+								},
+								{
+									"key": "parent_id",
+									"value": "3",
+									"description": "Üst kategorinin ID si no: listeleyerek kategori ID leri çekilir",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}api/categories",
+							"host": [
+								"{{base_url}}api"
+							],
+							"path": [
+								"categories"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "category list",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}api/categories",
+							"host": [
+								"{{base_url}}api"
+							],
+							"path": [
+								"categories"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "category delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "3|1hJ2urws4jIWhQLymlk8E5fRztk0TjYolwG2PDvfb71d1441",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}api/categories/10",
+							"host": [
+								"{{base_url}}api"
+							],
+							"path": [
+								"categories",
+								"10"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "category single",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}api/category/Programming",
+							"host": [
+								"{{base_url}}api"
+							],
+							"path": [
+								"category",
+								"Programming"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "category blog",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}api/category/programming/blogs",
+							"host": [
+								"{{base_url}}api"
+							],
+							"path": [
+								"category",
+								"programming",
+								"blogs"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comment",
+			"item": [
+				{
+					"name": "comment new",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "3|OkbGoZvxSXmBK724pp7HAidymqu3STIRUQeKqZJJ2a28334e",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "content",
+									"value": "yorum 34564",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}api/blogs/nextjs-vs-laravel-2/comments",
+							"host": [
+								"{{base_url}}api"
+							],
+							"path": [
+								"blogs",
+								"nextjs-vs-laravel-2",
+								"comments"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "comment list (Admin için)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer 1|wExlrZ1K5Lyz1dHkwvSvi3p4H7bC5mpsnRjHHcqt0807d126",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer 112|tDmbQ7yYTUsEVtDNrYJTkjM2PrlKtQ1flJUCVJVj913b9c1d",
+								"description": "admin",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}api/blogs/comments/all",
+							"host": [
+								"{{base_url}}api"
+							],
+							"path": [
+								"blogs",
+								"comments",
+								"all"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "comment get",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|0OtIunWUbfJAa5EvmB4016XmA4dNxJe4xIdGRCuxf05ef918",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer 1|wExlrZ1K5Lyz1dHkwvSvi3p4H7bC5mpsnRjHHcqt0807d126",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}api/blogs/guzel-gunler-gelecek/comments",
+							"host": [
+								"{{base_url}}api"
+							],
+							"path": [
+								"blogs",
+								"guzel-gunler-gelecek",
+								"comments"
+							],
+							"query": [
+								{
+									"key": null,
+									"value": "canakkale-gezisi",
+									"disabled": true
+								}
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "comment delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "4|coBy8WBa75AFHVU5HAc1XlBWaUrj5ZUoapcx3GHU99debb2b",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Acc",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}api/blogs/comments/22",
+							"host": [
+								"{{base_url}}api"
+							],
+							"path": [
+								"blogs",
+								"comments",
+								"22"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "comment approve",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "111|YsKJENFbeyHGRJMOiGreevN3LDofc7HVfuyf0avf4e859449",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "content",
+									"value": "Comment First",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}api/comment/5/approve",
+							"host": [
+								"{{base_url}}api"
+							],
+							"path": [
+								"comment",
+								"5",
+								"approve"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "comment pending",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "4|coBy8WBa75AFHVU5HAc1XlBWaUrj5ZUoapcx3GHU99debb2b",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "content",
+									"value": "Comment First",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}api/comment/22/pending",
+							"host": [
+								"{{base_url}}api"
+							],
+							"path": [
+								"comment",
+								"22",
+								"pending"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "comment reject",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "4|coBy8WBa75AFHVU5HAc1XlBWaUrj5ZUoapcx3GHU99debb2b",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "content",
+									"value": "Comment First",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}api/comment/21/reject",
+							"host": [
+								"{{base_url}}api"
+							],
+							"path": [
+								"comment",
+								"21",
+								"reject"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				},
+				{
+					"name": "comment filter",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|aOwlKscWFxAD8uhdnM8vsV39pSMDcdjQlWyOwYOH2ac45a03",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer 1|wExlrZ1K5Lyz1dHkwvSvi3p4H7bC5mpsnRjHHcqt0807d126",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}api/comments/filter/pending",
+							"host": [
+								"{{base_url}}api"
+							],
+							"path": [
+								"comments",
+								"filter",
+								"pending"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|r5RNx8na0A7rGdurAybYHj8P3AEyh5HbAM9iBUPV01258979",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer 1|wExlrZ1K5Lyz1dHkwvSvi3p4H7bC5mpsnRjHHcqt0807d126",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}api/users",
+							"host": [
+								"{{base_url}}api"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Roles",
+			"item": [
+				{
+					"name": "listRole",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "2|ovRDjXTAO9Ftbe6KlnJOiiBTrGYaYwBFDEvr5nhTb3fe468d",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer 1|wExlrZ1K5Lyz1dHkwvSvi3p4H7bC5mpsnRjHHcqt0807d126",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}api/listRole",
+							"host": [
+								"{{base_url}}api"
+							],
+							"path": [
+								"listRole"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Logs",
+			"item": [
+				{
+					"name": "log",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "3|OkbGoZvxSXmBK724pp7HAidymqu3STIRUQeKqZJJ2a28334e",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer 1|wExlrZ1K5Lyz1dHkwvSvi3p4H7bC5mpsnRjHHcqt0807d126",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}api/log",
+							"host": [
+								"{{base_url}}api"
+							],
+							"path": [
+								"log"
+							]
+						},
+						"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000/"
+		}
+	]
+}
