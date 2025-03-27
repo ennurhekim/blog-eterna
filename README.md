@@ -58,7 +58,13 @@ Belirli işlemleri belirli zamanlarda çalıştırmak için aşağıdaki komutu 
 ```sh
 php artisan schedule:work
 ```
+## Projeyi çalıştırmak
 
+
+```sh
+php artisan  serve
+npm run dev
+```
 ---
 
 ## Yorum Onayı
