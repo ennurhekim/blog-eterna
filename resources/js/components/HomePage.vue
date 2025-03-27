@@ -235,7 +235,7 @@ export default {
 		},
 		async area1Posts() {
 			try {
-				const response = await axios.get("http://localhost:8000/api/blogs/get/area1");
+				const response = await axios.get(this.$apiBaseURL+"/blogs/get/area1");
 				this.area1PostsData = response.data;
 			} catch (error) {
 				console.error("Veri çekme hatası:", error);
@@ -243,7 +243,7 @@ export default {
 		},
 		async area2Posts() {
 			try {
-				const response = await axios.get("http://localhost:8000/api/blogs/get/area2");
+				const response = await axios.get(this.$apiBaseURL+"/blogs/get/area2");
 				this.area2PostsData = response.data;
 			} catch (error) {
 				console.error("Veri çekme hatası:", error);
@@ -251,7 +251,7 @@ export default {
 		},
 		async area3Posts() {
 			try {
-				const response = await axios.get("http://localhost:8000/api/blogs/get/area3");
+				const response = await axios.get(this.$apiBaseURL+"/blogs/get/area3");
 				this.area3PostsData = response.data;
 			} catch (error) {
 				console.error("Veri çekme hatası:", error);
@@ -259,7 +259,7 @@ export default {
 		},
 		async area4Posts() {
 			try {
-				const response = await axios.get("http://localhost:8000/api/blogs/get/area4");
+				const response = await axios.get(this.$apiBaseURL+"/blogs/get/area4");
 				this.area4PostsData = response.data;
 			} catch (error) {
 				console.error("Veri çekme hatası:", error);
@@ -267,7 +267,7 @@ export default {
 		},
 		async area5Posts() {
 			try {
-				const response = await axios.get("http://localhost:8000/api/blogs/get/area5");
+				const response = await axios.get(this.$apiBaseURL+"/blogs/get/area5");
 				this.area5PostsData = response.data;
 			} catch (error) {
 				console.error("Veri çekme hatası:", error);

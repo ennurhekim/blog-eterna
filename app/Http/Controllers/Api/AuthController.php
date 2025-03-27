@@ -45,7 +45,7 @@ class AuthController extends Controller
             ]);
             $user = User::where(function ($query) use ($request) {
                 return $query->where('email', $request->email)
-                    ->orwhere('phone', $request->phone);
+                    ->orwhere('phone', $request->email);
             })->first();
 
             if (! $user || ! Hash::check($request->password, $user->password)) {

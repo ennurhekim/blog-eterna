@@ -70,7 +70,7 @@ export default {
     methods: {
         async fetchPost(slug) {
             try {
-                const response = await axios.get(`http://localhost:8000/api/blogs/${slug}`);
+                const response = await axios.get(this.$apiBaseURL+`/blogs/${slug}`);
                 this.post = response?.data?.data?.data;
                 this.image = response?.data?.data?.image;
                 console.log(response?.data?.data);
@@ -83,7 +83,7 @@ export default {
         },
         async fetchComments(slug) {
             try {
-                const response = await axios.get(`http://localhost:8000/api/blogs/${slug}/comments`);
+                const response = await axios.get(this.$apiBaseURL+`/blogs/${slug}/comments`);
                 this.comments = response?.data?.data.comments || [];
             } catch (error) {
                 console.error("Yorumları çekme hatası:", error);
@@ -101,7 +101,7 @@ export default {
             try {
                 
                 const response = await axios.post(
-                    `http://localhost:8000/api/blogs/${this.post.slug}/comments`,
+                    this.$apiBaseURL+`/blogs/${this.post.slug}/comments`,
                     { content: this.newComment },
                     { headers: { Authorization: `Bearer ${this.authToken}` } }
                 );

@@ -3,10 +3,22 @@
 
 ## Ortam Dosyası Ayarları
 
-`.env.example` dosyasını `.env` olarak değiştirin ve veritabanı ile mail bilgilerini girin.
+`.env.example` dosyasını `.env` olarak değiştirin ve Site Url, veritabanı ile mail bilgilerini girin.
+
+```sh
+Örnek
+APP_URL=https://blog-eterna.softrede.com
+VITE_API_BASE_URL=https://blog-eterna.softrede.com
+
+```
 
 ---
 
+## Vue Js ayarları
+
+`app.js` dosyasındaki ` app.config.globalProperties.$apiBaseURL = "https://blog-eterna.softrede.com/api" ;`  site url kısmını degiştir.
+
+---
 ## Veritabanı Seed İşlemleri
 
 Tüm yapıyı eklemek için (Admin, Users, Writer, vb.):

@@ -54,7 +54,7 @@ export default {
         async fetchCategory() {
             const slug = this.$route.params.slug;
             try {
-                const response = await axios.get(`http://localhost:8000/api/category/${slug}`);
+                const response = await axios.get(this.$apiBaseURL+`/category/${slug}`);
                 if (response.data.success) {
                     this.category = response.data.data.category;
                 } else {
@@ -67,7 +67,7 @@ export default {
         async fetchBlogs() {
             const slug = this.$route.params.slug;
             try {
-                const response = await axios.get(`http://localhost:8000/api/category/${slug}/blogs`);
+                const response = await axios.get(this.$apiBaseURL+`/category/${slug}/blogs`);
                 if (response.data.success) {
                     this.blogs = response.data.data.blogs;
                 } else {

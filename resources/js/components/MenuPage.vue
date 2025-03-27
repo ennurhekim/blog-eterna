@@ -76,7 +76,7 @@ export default {
     },
     async fetchCategories() {
       try {
-        const response = await axios.get('http://localhost:8000/api/categories');
+        const response = await axios.get(this.$apiBaseURL+'/categories');
         this.categories = response.data.data.categories;
         // Her kategoriye 'isHovered' özelliği ekleyelim
         this.categories.forEach(category => {
